@@ -1,0 +1,35 @@
+<app-nav></app-nav>
+<div class="profile-screen">
+  @if(isLoading){
+  <div class="loading">Loading...</div>
+  }@else{
+  <div class="profile-container">
+    <img class="profile" alt="profile-img" [src]="profilePicUrl" />
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+      "
+    >
+      <p style="font-weight: 600; font-size: 18px;">{{ name }}</p>
+      <p style="font-size: 15px">Email: {{ email }}</p>
+      <p style="font-size: 15px">Mobile: {{ mobile }}</p>
+    </div>
+  </div>
+
+  <div class="posts">
+    <h3 style="text-align: center; margin-top: 1rem">Posts</h3>
+    @if(posts.length===0){
+    <p style="text-align: center; margin: 1rem">No posts available</p>
+    }@else{
+    <div class="posts-container">
+      @for(post of posts; track post.id){
+      <app-post [post]="post" [isAuthor]="true"></app-post>
+      }
+    </div>
+    }
+  </div>
+  }
+</div>

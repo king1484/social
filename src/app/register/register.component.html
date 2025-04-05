@@ -1,26 +1,58 @@
-<form #form (ngSubmit)="register()">
-  <h2>Registration</h2>
-  <input type="text" name="name" id="name" placeholder="Enter name" required/>
-  <input
-    type="number"
-    name="mobile"
-    id="mobile"
-    placeholder="Enter mobile number"
-  />
-  <input type="email" name="email" id="email" placeholder="Enter email" required/>
-  <input
-    type="password"
-    name="password"
-    id="password"
-    placeholder="Enter password"
-    required
-  />
-  <input
-    type="password"
-    name="cpassword"
-    id="cpassword"
-    placeholder="Confirm password"
-    required
-  />
-  <button type="submit">Register</button>
-</form>
+<div class="register">
+  <form #form="ngForm" (ngSubmit)="register()">
+    <h2 style="margin-bottom: 1rem">Registration</h2>
+    <input
+      type="text"
+      name="name"
+      id="name"
+      placeholder="Enter name"
+      [(ngModel)]="name"
+      required
+    />
+    <input
+      type="tel"
+      name="mobile"
+      id="mobile"
+      placeholder="Enter mobile number"
+      [(ngModel)]="mobile"
+      minlength="10"
+      required
+    />
+    <input
+      type="email"
+      name="email"
+      id="email"
+      placeholder="Enter email"
+      [(ngModel)]="email"
+      email
+      required
+    />
+    <input
+      type="password"
+      name="password"
+      id="password"
+      placeholder="Enter password"
+      [(ngModel)]="password"
+      required
+    />
+    <input
+      type="password"
+      name="cpassword"
+      id="cpassword"
+      placeholder="Confirm password"
+      [(ngModel)]="cpassword"
+      required
+    />
+    <button type="submit">@if(isLoading){Loading...}@else{Register}</button>
+    @if(form.submitted && form.invalid){
+    <p>Please enter valid details!</p>
+    } @if(form.submitted && password!==cpassword){
+    <p>Both passwords are not same!</p>
+    } @if(error){
+    <p class="error">An error occured, please try again later</p>
+    }
+  </form>
+  <p style="margin-top: 1.5rem">
+    Already have an account? <a routerLink="/login">Login</a>
+  </p>
+</div>

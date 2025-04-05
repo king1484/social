@@ -1,0 +1,27 @@
+<app-nav></app-nav>
+<div class="newpost">
+  <form #form="ngForm" (ngSubmit)="isEditing ? updatePost() : uploadPost()">
+    <h2>New Post</h2>
+    <input
+      type="text"
+      name="title"
+      id="title"
+      placeholder="Enter title"
+      [(ngModel)]="title"
+      required
+    />
+    <textarea
+      name="content"
+      id="content"
+      placeholder="Enter content"
+      [(ngModel)]="content"
+      required
+    ></textarea>
+    <button type="submit">{{ isEditing ? "Update Post" : "Post" }}</button>
+    @if(isLoading){
+    <p>Loading...</p>
+    } @if(form.submitted && !form.valid){
+    <p class="error" style="margin-top: 1rem">Please fill out all fields</p>
+    }
+  </form>
+</div>

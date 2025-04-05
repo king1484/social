@@ -1,0 +1,59 @@
+.post {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin-top: 2rem;
+  width: 40vw;
+}
+
+.profile {
+  background-color: gray;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title{
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    padding: 2px 5px;
+    margin-top: 10px;
+}
+
+.content{
+    color: #333;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    padding: 2px 5px;
+}
+
+.like-container{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+}
+
+.controls{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+button{
+    background-color: rgb(50, 48, 48);
+    color: white;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}

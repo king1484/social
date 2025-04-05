@@ -1,0 +1,37 @@
+nav{
+    background-color: aliceblue;
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+    align-items: center;
+}
+
+ul{
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+}
+
+li{
+    cursor: pointer;
+}
+
+li:hover{
+    transform: scale(1.1);
+
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    font-size: 1.1rem;
+}
+
+.active{
+    color: red;
+}
+
+p{
+    font-size: 1.2rem;
+    font-weight: bold;
+}

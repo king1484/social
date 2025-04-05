@@ -1,1 +1,30 @@
-<p>login works!</p>
+<div class="login">
+  <form #form="ngForm" (ngSubmit)="login()">
+    <h2  style="margin-bottom: 1rem;">Login</h2>
+    <input
+      type="email"
+      name="email"
+      id="email"
+      placeholder="Enter email"
+      [(ngModel)]="email"
+      email
+      required
+    />
+    <input
+      type="password"
+      name="password"
+      id="password"
+      placeholder="Enter password"
+      [(ngModel)]="password"
+      required
+    />
+    <button type="submit">@if(isLoading){Loading...}@else{Login}</button>
+    @if(form.submitted && form.invalid){
+    <p>Please enter valid details!</p>
+    }
+    @if(error!==""){
+    <p class="error">{{error}}</p>
+    }
+  </form>
+  <p style="margin-top: 1.5rem;">Not created an account yet? <a routerLink="/register">Register</a></p>
+</div>

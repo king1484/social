@@ -1,0 +1,12 @@
+<app-nav></app-nav>
+@if(isLoading){
+<p class="center">Loading...</p>
+}@else{ @if(posts.length===0){
+<p class="center">No posts found!</p>
+}@else{
+<div class="posts">
+  @for(p of posts; track p._id){
+  <app-post [post]="p" [isAuthor]="false"></app-post>
+  }
+</div>
+} }
