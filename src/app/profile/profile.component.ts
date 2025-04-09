@@ -2,6 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { NavComponent } from '../nav/nav.component';
 import { HttpClient } from '@angular/common/http';
 import { PostComponent } from '../post/post.component';
+import { PostService } from '../services/post.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,14 +18,12 @@ export class ProfileComponent implements OnInit {
   isLoading = false;
   profilePicUrl = '';
   posts: any = [];
-
-  http = inject(HttpClient);
-  baseUrl = 'http://localhost:5000';
+  postService = inject(PostService);
+  authService = inject(AuthService);
 
   ngOnInit() {
     this.isLoading = true;
-    this.http
-      .post(this.baseUrl + '/profile', { uid: localStorage.getItem('uid') })
+    this.authService.getUserProfile(localStorage.getItem('uid')!)
       .subscribe({
         next: (data: any) => {
           this.name = data.name;
@@ -40,18 +40,16 @@ export class ProfileComponent implements OnInit {
   }
 
   getPosts() {
-    this.http
-      .get(`${this.baseUrl}/post/${localStorage.getItem('uid')}`)
-      .subscribe({
-        next: (res: any) => {
-          this.posts = res;
-          console.log(this.posts);
-          this.isLoading = false;
-        },
-        error: (error) => {
-          console.error('Failed to fetch posts', error);
-          this.isLoading = false;
-        },
-      });
+    this.postService.getPostsByUID(localStorage.getItem('uid')!).subscribe({
+      next: (res: any) => {
+        this.posts = res;
+        console.log(this.posts);
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Failed to fetch posts', error);
+        this.isLoading = false;
+      },
+    });
   }
 }

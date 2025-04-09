@@ -3,6 +3,7 @@ import { NavComponent } from '../nav/nav.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PostService } from '../services/post.service';
 
 @Component({
   selector: 'app-newpost',
@@ -13,8 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class NewpostComponent implements OnInit {
   title: string = '';
   content: string = '';
-  baseUrl = 'http://localhost:5000';
-  http = inject(HttpClient);
+  postService = inject(PostService);
   isLoading = false;
   form = viewChild.required<NgForm>('form');
   isEditing = false;
@@ -40,19 +40,14 @@ export class NewpostComponent implements OnInit {
     }
     this.isLoading = true;
     console.log('Updating post...');
-    this.http
-      .patch(`${this.baseUrl}/post/${this.id}`, {
-        title: this.title,
-        content: this.content,
-      })
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-          this.isLoading = false;
-          alert('Post updated successfully!');
-          this.router.navigate(['/profile']);
-        },
-      });
+    this.postService.updatePost(this.id, this.title, this.content).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.isLoading = false;
+        alert('Post updated successfully!');
+        this.router.navigate(['/profile']);
+      },
+    });
   }
 
   uploadPost() {
@@ -62,24 +57,18 @@ export class NewpostComponent implements OnInit {
     this.isLoading = true;
     console.log('Uploading post...');
     const uid = localStorage.getItem('uid');
-    this.http
-      .post(`${this.baseUrl}/post`, {
-        title: this.title,
-        content: this.content,
-        uid: uid,
-      })
-      .subscribe({
-        next: (response) => {
-          console.log(response);
-          this.isLoading = false;
-          this.form().resetForm();
-          alert('Post uploaded successfully!');
-          this.router.navigate(['/home']);
-        },
-        error: (error) => {
-          console.error('Failed to upload post', error);
-          this.isLoading = false;
-        },
-      });
+    this.postService.uploadPost(this.title, this.content, uid!).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.isLoading = false;
+        this.form().resetForm();
+        alert('Post uploaded successfully!');
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        console.error('Failed to upload post', error);
+        this.isLoading = false;
+      },
+    });
   }
 }

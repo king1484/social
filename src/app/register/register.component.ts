@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, viewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -18,20 +19,13 @@ export class RegisterComponent {
   cpassword = '';
   form = viewChild.required<NgForm>('form');
   router = inject(Router);
-  http = inject(HttpClient);
-  baseUrl = 'http://localhost:5000';
+  authService = inject(AuthService);
   error = false;
   isLoading = false;
 
   register() {
     if (this.form().valid && this.password === this.cpassword) {
-      this.http
-        .post(`${this.baseUrl}/auth/register`, {
-          name: this.name,
-          mobile: +this.mobile,
-          email: this.email,
-          password: this.password,
-        })
+      this.authService.register(this.name, +this.mobile, this.email, this.password)
         .subscribe({
           next: (data: any) => {
             console.log(data);

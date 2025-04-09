@@ -2,6 +2,7 @@ import { MomentModule } from 'ngx-moment';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, Input, input } from '@angular/core';
 import { Router } from '@angular/router';
+import { PostService } from '../services/post.service';
 
 @Component({
   selector: 'app-post',
@@ -13,8 +14,7 @@ export class PostComponent {
   @Input({ required: true }) post: any;
   @Input({ required: true }) isAuthor: boolean = false;
   isLiked = false;
-  http = inject(HttpClient);
-  baseUrl = 'http://localhost:5000';
+  postService = inject(PostService);
   router = inject(Router);
 
   ngOnInit() {
@@ -28,11 +28,8 @@ export class PostComponent {
   like() {
     if (!this.isLiked) {
       this.post.likes.push(localStorage.getItem('uid'));
-      this.http
-        .put(`${this.baseUrl}/post/like/${this.post._id}`, {
-          action: 'like',
-          uid: localStorage.getItem('uid'),
-        })
+      this.postService
+        .likeUnlikePost(this.post._id, 'like', localStorage.getItem('uid')!)
         .subscribe({
           next: (data) => {
             console.log(data);
@@ -45,11 +42,8 @@ export class PostComponent {
       this.post.likes = this.post.likes.filter(
         (uid: string | null) => uid !== localStorage.getItem('uid')
       );
-      this.http
-        .put(`${this.baseUrl}/post/like/${this.post._id}`, {
-          action: 'unlike',
-          uid: localStorage.getItem('uid'),
-        })
+      this.postService
+        .likeUnlikePost(this.post._id, 'unlike', localStorage.getItem('uid')!)
         .subscribe({
           next: (data) => {
             console.log(data);
@@ -77,7 +71,7 @@ export class PostComponent {
     if (!confirm('Are you sure you want to delete this post?')) {
       return;
     }
-    this.http.delete(`${this.baseUrl}/post/${id}`).subscribe({
+    this.postService.deletePost(id).subscribe({
       next: (data) => {
         console.log(data);
         alert('Post deleted successfully');

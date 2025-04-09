@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { NavComponent } from '../nav/nav.component';
 import { PostComponent } from '../post/post.component';
 import { HttpClient } from '@angular/common/http';
+import { PostService } from '../services/post.service';
 
 @Component({
   selector: 'app-home',
@@ -10,14 +11,13 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
-  http = inject(HttpClient);
-  baseUrl = 'http://localhost:5000';
+  postSevice = inject(PostService);
   posts: any[] = [];
   isLoading = false;
 
   ngOnInit() {
     this.isLoading = true;
-    this.http.get(`${this.baseUrl}/post`).subscribe({
+    this.postSevice.getAllPosts().subscribe({
       next: (res: any) => {
         this.posts = res;
         console.log(this.posts);

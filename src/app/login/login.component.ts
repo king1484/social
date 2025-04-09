@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, viewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,18 +15,13 @@ export class LoginComponent {
   password = '';
   router = inject(Router);
   form = viewChild.required<NgForm>('form');
-  http = inject(HttpClient);
-  baseUrl = 'http://localhost:5000';
+  authService = inject(AuthService);
   error = '';
   isLoading = false;
 
   login() {
     if (this.form().valid) {
-      this.http
-        .post(`${this.baseUrl}/auth/login`, {
-          email: this.email,
-          password: this.password,
-        })
+      this.authService.login(this.email, this.password)
         .subscribe({
           next: (res: any) => {
             this.isLoading = false;
