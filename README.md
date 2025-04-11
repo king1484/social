@@ -1,14 +1,14 @@
 # Blogger Website
 
-Features:
--> Login, Registration with validations \n
--> All posts with likes functionality \n
--> Upload new post
--> User profile with thier posts
--> Edit, delete posts
+Features:  <br/>
+-> Login, Registration with validations <br/>
+-> All posts with likes functionality <br/>
+-> Upload new post <br/>
+-> User profile with thier posts <br/>
+-> Edit, delete posts <br/> <br/>
 
-Http methods used:
--> GET for retreiving posts
--> POST for uploading post
--> PATCH for updating post
+Http methods used: <br/>
+-> GET for retreiving posts <br/>
+-> POST for uploading post <br/>
+-> PATCH for updating post <br/>
 -> DELETE for removing post
