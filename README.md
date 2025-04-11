@@ -1,8 +1,8 @@
 # Blogger Website
 
 Features:
--> Login, Registration with validations
--> All posts with likes functionality
+-> Login, Registration with validations \n
+-> All posts with likes functionality \n
 -> Upload new post
 -> User profile with thier posts
 -> Edit, delete posts
